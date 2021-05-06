@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: ${ENVIRONMENT:-development}
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - '.:/opt/app'
+    command: ["uvicorn", "app.main:app", "--reload", "--host", "0.0.0.0", "--port", "8080"]
+    ports:
+      - '8080:8080'
+
+  redis:
+    image: 'redis:6'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+    ports:
+      - '6379:6379'
