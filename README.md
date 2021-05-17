@@ -2,7 +2,8 @@
 
 ## Description
 
-Asynchronous chat based on FastAPI + Websockets + Redis pub/sub.
+Asynchronous chat with a single room for multiple users. 
+Based on FastAPI + Websockets + Redis pub/sub.
 
 - Connect to the chat: `ws://localhost:8000/ws/{client_id}`
 - Get last messages: `http://localhost:8000/messages`
